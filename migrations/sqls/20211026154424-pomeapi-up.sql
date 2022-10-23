@@ -26,9 +26,9 @@ CREATE TABLE IF NOT EXISTS relexptag (
 
 CREATE TABLE IF NOT EXISTS lvl (
     id SERIAL,
-    user VARCHAR,
+    pomeuser VARCHAR,
     email VARCHAR,
-    passwd VARCHAR,
+    pomepasswd VARCHAR,
     PRIMARY KEY (id)
 );
 
