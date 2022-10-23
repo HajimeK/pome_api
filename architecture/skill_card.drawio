@@ -1,0 +1,37 @@
+<mxfile host="65bd71144e">
+    <diagram id="yG8oHHxLGlr3wb4FN0TV" name="Page-1">
+        <mxGraphModel dx="711" dy="615" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="" style="shape=rect;fillColor=#ffffff;strokeColor=none;shadow=1;" vertex="1" parent="1">
+                    <mxGeometry x="190" y="140" width="342" height="356" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="" style="shape=rect;strokeColor=none;fillColor=#BDBDBD;whiteSpace=wrap;" vertex="1" parent="2">
+                    <mxGeometry width="342" height="196" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Skill1" style="text;verticalAlign=bottom;fontSize=23;spacingLeft=16;spacing=0;spacingBottom=-5;resizeWidth=1;fontColor=#333333;" vertex="1" parent="2">
+                    <mxGeometry y="0.5506" width="342" height="45" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="Located two hours south of Sydney in the Southern Highlands of New Sout Wales, ..." style="text;whiteSpace=wrap;spacingLeft=16;spacingRight=16;spacing=0;fontSize=14;resizeWidth=1;resizeHeight=1;" vertex="1" parent="2">
+                    <mxGeometry y="0.5506" width="342" height="76" relative="1" as="geometry">
+                        <mxPoint y="50" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="6" value="" style="shape=rect;fillColor=none;strokeColor=none;" vertex="1" parent="2">
+                    <mxGeometry y="356" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="SHARE" style="text;fontSize=12;fontColor=#FFA534;spacingTop=0;whiteSpace=wrap;spacing=0;verticalAlign=middle;align=center;fontStyle=1;" vertex="1" parent="6">
+                    <mxGeometry y="-44" width="80" height="44" relative="1" as="geometry">
+                        <mxPoint y="-44" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="8" value="EXPLORE" style="text;fontSize=12;fontColor=#FFA534;spacingTop=0;whiteSpace=wrap;spacing=0;verticalAlign=middle;align=center;fontStyle=1;" vertex="1" parent="6">
+                    <mxGeometry x="80" y="-44" width="80" height="44" relative="1" as="geometry">
+                        <mxPoint x="80" y="-44" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
