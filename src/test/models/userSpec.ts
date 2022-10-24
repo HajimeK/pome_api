@@ -5,7 +5,7 @@ describe("User Model", () => {
     const users: User[] = [
         {
             id: -1, // -1 if not assigned in DB
-            name: "User",
+            username: "User",
             email: "email@test.dev",
             passwd: "test_password"
         }
@@ -14,7 +14,7 @@ describe("User Model", () => {
 
     it('create method should add a user', async () => {
         user = await ModelUser.create(users[0]);
-        expect(user.name).toEqual(users[0].name);
+        expect(user.username).toEqual(users[0].username);
         expect(user.email).toEqual(users[0].email);
         expect(user.passwd).not.toEqual(users[0].passwd); // passwd should be hashed
     });
@@ -26,7 +26,7 @@ describe("User Model", () => {
 
     it('get method should return the correct user', async () => {
         const result = await ModelUser.get(user.id);
-        expect(result.name).toEqual(users[0].name);
+        expect(result.username).toEqual(users[0].username);
         expect(result.email).toEqual(users[0].email);
         expect(result.passwd).not.toEqual(users[0].passwd); // passwd should be hashed
     });
@@ -41,23 +41,23 @@ describe("User Model", () => {
         expect(result).toBeNull();
     });
 
-    it('authenticate with wrong user to approve login', async () => {
+    it('authenticate with wrong user to reject login', async () => {
         const result = await ModelUser.authenticate('wrong@something.com', users[0].passwd);
         expect(result).toBeNull();
     });
 
-    it('update method should update a product fields', async () => {
+    it('update method should allow login after update', async () => {
         const update_name = 'name_update';
         const email_update = 'email_update';
         const passwd_update = 'passwd_update';
         const result = await ModelUser.update({
             id: user.id,
-            name: update_name,
+            username: update_name,
             email: email_update,
             passwd: passwd_update
         });
-        expect(result.email).toEqual('email_update@something.com');
-        expect(result.name).toEqual('name_update');
+        expect(result.email).toEqual(email_update);
+        expect(result.username).toEqual(update_name);
         expect(await ModelUser.authenticate(email_update, passwd_update)).not.toBeNull();
     });
 

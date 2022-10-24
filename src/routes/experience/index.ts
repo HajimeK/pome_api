@@ -1,5 +1,5 @@
 import express from 'express';
-import { ModelExperience, Experience } from '../../models/Experience';
+import { ModelExperience, Experience, ExperienceBody } from '../../models/Experience';
 import { verifyAuthToken } from '../util/auth';
 
 const experience =  express.Router();
@@ -42,19 +42,19 @@ experience.get('/:id', (request: express.Request, response: express.Response) =>
 });
 
 experience.post('/', verifyAuthToken, (request: express.Request, response: express.Response) => {
-    const newExperience = (request.body as unknown) as Experience;
-    ModelExperience.create(newExperience)
+    const newExperience = (request.body as unknown) as ExperienceBody;
+    ModelExperience.create(newExperience.experience, newExperience.tags)
     .then(experience => {
         return response.status(200).send(experience);
     })
     .catch(error => {
-        return response.status(400).send(`Could not create an experience ${newExperience.title}. Error: ${(error as Error).message}`);
+        return response.status(400).send(`Could not create an experience ${newExperience.experience.title}. Error: ${(error as Error).message}`);
     });
 });
 
 experience.put('/', verifyAuthToken, (request: express.Request, response: express.Response) => {
     const updatedExperience = (request.body as unknown) as Experience;
-    ModelExperience.create(updatedExperience)
+    ModelExperience.update(updatedExperience)
     .then(experience => {
         return response.status(200).send(experience);
     })

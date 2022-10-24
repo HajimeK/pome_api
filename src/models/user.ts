@@ -5,7 +5,7 @@ import client from '../database';
 
 export type User = {
     id: number, // -1 if not assigned in DB
-    name: string,
+    username: string,
     email: string,
     passwd: string,
 };
@@ -21,7 +21,7 @@ export class ModelUser {
     static async list(): Promise<User[]> {
         try {
             // Generate SQL query
-            const sql = 'SELECT id, name, passwd FROM appuser';
+            const sql = 'SELECT id, username, email FROM appuser';
             // request to DB
             const conn = await client.connect();
             const result = (await conn.query(sql)).rows as User[];
@@ -35,7 +35,7 @@ export class ModelUser {
 
     static async get(id: number): Promise<User> {
         try {
-            const sql = `SELECT appuser.id, appuser.name, appuser.email \
+            const sql = `SELECT id, username, email \
                             FROM appuser \
                             WHERE id=${id}`;
             // request to DB
@@ -54,27 +54,27 @@ export class ModelUser {
             const conn = await client.connect();
             const hash = bcrypt.hashSync(u.passwd + (BCRYPT_PASSWORD as string),
                                         Number(SALT_ROUNDS));
-            const sql = `INSERT INTO appuser (name, email, passwd ) \
-                        VALUES('${u.name}', '${u.email}', '${hash}') RETURNING *`;
+            const sql = `INSERT INTO appuser (username, email, passwd ) \
+                        VALUES('${u.username}', '${u.email}', '${hash}') RETURNING *`;
             // request to DB
             const result = (await conn.query(sql)).rows[0] as User;
             conn.release()
 
             return result;
         } catch(error) {
-            throw new Error(`unable to create a uer ${u.name}, ${u.email}: ${(error as Error).message}`);
+            throw new Error(`unable to create a uer ${u.username}, ${u.email}: ${(error as Error).message}`);
         }
     }
 
     static async update(u: User): Promise<User> {
         try {
             const conn = await client.connect();
-            const hash = bcrypt.hashSync(u.name + (process.env.BCRYPT_PASSWORD as string),
-                                        Number(process.env.SALT_ROUND));
+            const hash = bcrypt.hashSync(u.passwd + (BCRYPT_PASSWORD as string),
+                                        Number(SALT_ROUNDS));
             const sql = `UPDATE appuser \
-                            SET name = '${u.name}', \
+                            SET username = '${u.username}', \
                                 email   = '${u.email}', \
-                                userpassword = '${hash}' \
+                                passwd = '${hash}' \
                             WHERE  appuser.id = ${u.id} \
                             RETURNING *`;
             // request to DB
@@ -83,7 +83,7 @@ export class ModelUser {
 
             return result;
         } catch(error) {
-            throw new Error(`unable to create a uer ${u.name}, ${u.email}: ${(error as Error).message}`);
+            throw new Error(`unable to create a uer ${u.username}, ${u.email}: ${(error as Error).message}`);
         }
     }
 

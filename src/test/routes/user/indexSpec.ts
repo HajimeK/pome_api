@@ -2,16 +2,31 @@ import request from 'supertest';
 import app from '../../../server';
 import { ModelUser, User } from '../../../models/user';
 import { loginToken } from '../../../routes/user';
+import { create } from 'domain';
 
 // User
-describe('Test suite for /user', () => {
+describe('Test suite for /api/user', () => {
 
-    const modelUser = new ModelUser();
-    // login to get auth token
-
+    const adminuser: User = {
+        id: -1, // -1 if not assigned in DB
+        username: 'admintest',
+        email: 'admin@test.test',
+        passwd: 'password',
+    };
     let user: User;
-    let createdUser: User;
-    let userid = 1;
+    const testuser: User = {
+        id: -1, // -1 if not assigned in DB
+        username: 'admin',
+        email: 'admin@test.test',
+        passwd: 'password',
+    };
+
+    let createdUser: User = {
+        id: -1, // -1 if not assigned in DB
+        username: 'test',
+        email: 'test@test.test',
+        passwd: 'password',
+    };
     let token: string;
     let credential: loginToken
 
@@ -19,23 +34,17 @@ describe('Test suite for /user', () => {
 
     beforeAll(async () => {
         // create a test user
-        user = await modelUser.create({
-            id: 0,
-            email: 'email@something.com',
-            firstname: 'First',
-            lastname: 'Last',
-            userpassword: 'Pass'
-        });
+        user = await ModelUser.create(adminuser);
     });
 
     afterAll(async () => {
-        await modelUser.delete(user.id);
+        await ModelUser.delete(user.id);
     });
 
-    it('/user/login', async () => {
+    it('/api/user/login', async () => {
         await req
-            .post('/user/login')
-            .send({email: 'email@something.com', password: 'Pass'})
+            .post('/api/user/login')
+            .send({email: adminuser.email, password: adminuser.passwd})
             .expect(200)
             .expect((res) => {
                 credential = res.body as loginToken;
@@ -43,50 +52,40 @@ describe('Test suite for /user', () => {
             });
     });
 
-    it('/user/create', async () => {
-        await req
-            .post('/user/create')
-            .auth(token, {type: 'bearer'})
-            .send(
-                {
-                    id: 0,
-                    email: 'email_test@something.com',
-                    firstname: 'FirstTest',
-                    lastname: 'LastTest',
-                    userpassword: 'PassTest'
-                }
-            )
-            .expect(200)
-            .expect ( (response) => {
-                createdUser = response.body as User;
-                expect(createdUser.email).toBe('email_test@something.com');
-                expect(createdUser.firstname).toBe('FirstTest');
-                expect(createdUser.lastname).toBe('LastTest');
-                userid = createdUser.id;
-            });
-    });
+    // it('/api/user/create', async () => {
+    //     await req
+    //         .post('/api/user')
+    //         .auth(token, {type: 'bearer'})
+    //         .send(testuser)
+    //         .expect(200)
+    //         .expect ( (response) => {
+    //             createdUser = response.body as User;
+    //             expect(createdUser.email).toBe(testuser.email);
+    //             expect(createdUser.username).toBe(testuser.username);
+    //             testuser.id = createdUser.id;
+    //         });
+    // });
 
-    it('/user/index', async () => {
-        await req
-            .get('/user/index')
-            .auth(token, {type: 'bearer'})
-            .expect(200)
-            .expect ( (response) => {
-                const users = response.body as User[];
-                expect(users.length).toEqual(2);
-            });
-    });
+    // it('/api/user/list', async () => {
+    //     await req
+    //         .get('/api/user/list')
+    //         .auth(token, {type: 'bearer'})
+    //         .expect(200)
+    //         .expect ( (response) => {
+    //             const users = response.body as User[];
+    //             expect(users.length).toEqual(2);
+    //         });
+    // });
 
-    it(`/user/show/${userid}`, async () => {
-        await req
-            .get(`/user/show/${userid}`)
-            .auth(token, {type: 'bearer'})
-            .expect(200)
-            .expect ( (response) => {
-                const user = response.body as User;
-                expect(user.email).toBe(createdUser.email);
-                expect(user.firstname).toBe(createdUser.firstname);
-                expect(user.lastname).toBe(createdUser.lastname);
-            });
-    });
+    // it(`/api/user/get/${createdUser.id}`, async () => {
+    //     await req
+    //         .get(`/api/user/get/${createdUser.id}`)
+    //         .auth(token, {type: 'bearer'})
+    //         .expect(200)
+    //         .expect ( (response) => {
+    //             const user = response.body as User;
+    //             expect(user.email).toBe(createdUser.email);
+    //             expect(user.username).toBe(createdUser.username);
+    //         });
+    // });
 });

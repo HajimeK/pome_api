@@ -1,11 +1,16 @@
 import client from '../database';
-import { ModelTag, Tag } from './tag';
+import { ModelTag } from './tag';
 
 export type Experience = {
     id: number, // -1 if not assigned in DB
     title: string,
     note: string,
-    url: string
+    urle: string
+};
+
+export type ExperienceBody = {
+    experience: Experience,
+    tags: string[]
 };
 
 export class ModelExperience {
@@ -15,8 +20,11 @@ export class ModelExperience {
             // Generate SQL query
             let sql = '';
             if(tagName!== undefined) {
-                const tag = await ModelTag.get(tagName);
-                sql = `SELECT * FROM experience INNER JOIN relexptag WHERE tag=${tag.id}`;
+                sql = `SELECT experience.id, experience.title, experience.note, experience.urle \
+                        FROM experience \
+                        JOIN relexptag ON experience.id=relexptag.experience \
+                        JOIN tag  ON relexptag.tag=tag.id \
+                        WHERE tag.tag='${tagName}';`;
             } else {
                 sql = `SELECT * FROM experience`;
             }
@@ -26,13 +34,13 @@ export class ModelExperience {
 
             return experiences;
         } catch (error) {
-            throw new Error(`Could not get orders. Error: ${(error as Error).message}`);
+            throw new Error(`Could not get experiences. Error: ${(error as Error).message}`);
         }
     }
 
     static async get(id: number): Promise<Experience> {
         try {
-            const sql = `SELECT * FROM experience where id="${id}"`;
+            const sql = `SELECT * FROM experience where id=${id}`;
             // request to DB
             const conn = await client.connect();
             const experience = (await conn.query(sql)).rows[0] as Experience;
@@ -44,18 +52,21 @@ export class ModelExperience {
         }
     }
 
-    static async create(experience: Experience, tag?: string): Promise<Experience> {
+    static async create(experience: Experience, tags?: string[]): Promise<Experience> {
         try {
+            const url: string = '$$' + experience.urle + '$$';
             // DB query
             const conn = await client.connect();
             // Create an experience
-            const sql = `INSERT INTO experience (title, note, url) \
-                                VALUES(${experience.title}, ${experience.note}, ${experience.url}) RETURNING *`;
+            const sql = `INSERT INTO experience (title, note, urle) \
+                                VALUES('${experience.title}', '${experience.note}', ${url} ) RETURNING *`;
             const result = (await conn.query(sql)).rows[0] as Experience;
-            if (tag !== undefined) {
-                tag = ((await conn.query(sql)).rows[0] as Tag).tag
-                await conn.query(`INSERT INTO relexptag (experience, tag) \
-                                VALUES(${result.id}, ${tag})`);
+            if (tags !== undefined) {
+                for(const tag of tags) {
+                    const tagid = (await ModelTag.get(tag)).id;
+                    await conn.query(`INSERT INTO relexptag (experience, tag) \
+                                    VALUES(${result.id}, ${tagid})`);
+                }
             }
             conn.release();
 
@@ -68,13 +79,14 @@ export class ModelExperience {
 
     static async update(experience: Experience): Promise<Experience> {
         try {
+            const url: string = '$$' + experience.urle + '$$';
             // DB query
             const conn = await client.connect();
             // start transaction
             const sql = `UPDATE experience \
-                            SET title = ${experience.title} \
-                                note = ${experience.note}
-                                url = ${experience.url} \
+                            SET title = '${experience.title}', \
+                                note = '${experience.note}', \
+                                urle = ${url} \
                             WHERE  experience.id = ${experience.id} \
                             RETURNING *;`
             const update = (await conn.query(sql)).rows[0] as Experience;
@@ -91,9 +103,11 @@ export class ModelExperience {
 
     static async delete(id: number): Promise<Experience> {
         try {
-            const sql = `DELETE FROM apporder WHERE id=${id}`;
             const conn = await client.connect();
-            const result = await conn.query(sql);
+            const sqlreleexp = `DELETE FROM relexptag WHERE experience=${id}`;
+            await conn.query(sqlreleexp);
+            const sqlexp = `DELETE FROM experience WHERE id=${id}`;
+            const result = await conn.query(sqlexp);
             conn.release();
 
             return result.rows[0] as Experience;

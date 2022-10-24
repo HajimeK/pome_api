@@ -9,8 +9,5 @@ describe('Test Suite for /', () => {
         await req
             .get('/')
             .expect(200)
-            .expect( (response) => {
-                console.log(response.body);
-            });
     });
 });

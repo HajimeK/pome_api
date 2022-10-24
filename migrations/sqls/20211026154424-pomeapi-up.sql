@@ -24,11 +24,11 @@ CREATE TABLE IF NOT EXISTS relexptag (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS lvl (
+CREATE TABLE IF NOT EXISTS appuser (
     id SERIAL,
-    pomeuser VARCHAR,
+    username VARCHAR,
     email VARCHAR,
-    pomepasswd VARCHAR,
+    passwd VARCHAR,
     PRIMARY KEY (id)
 );
 

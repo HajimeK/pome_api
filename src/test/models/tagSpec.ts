@@ -38,7 +38,7 @@ describe("Tag Model", () => {
 
     it('delete method should remove the tag', async () => {
         await ModelTag.delete(tag.tag);
-        expect(await ModelTag.get(tag.tag)).toThrowError()
+        expect(await ModelTag.get(tag.tag)).toBeUndefined();
     });
 
 });

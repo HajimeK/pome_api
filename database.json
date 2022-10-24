@@ -1,16 +1,16 @@
 {
     "prod": {
         "driver": "pg",
-        "host": "127.0.0.1",
-        "database": {"ENV": "POSTGRES_DB_TEST"},
-        "user": {"ENV": "POSTGRES_USER"},
-        "password": {"ENV": "POSTGRES_PASSWORD"}
+        "host": "postgres",
+        "database": "pomedb",
+        "user": "pomeAdmin",
+        "password": "password"
     },
     "dev": {
         "driver": "pg",
-        "host": {"ENV": "POSTGRES_HOST_DEV"},
-        "database": {"ENV": "POSTGRES_DB_DEV"},
-        "user": {"ENV": "POSTGRES_USER"},
-        "password": {"ENV": "POSTGRES_PASSWORD"}
+        "host": "postgres",
+        "database": "pomedb_dev",
+        "user": "pomeAdmin",
+        "password": "password"
     }
 }

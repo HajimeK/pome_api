@@ -7,7 +7,7 @@ import { loginToken } from '../../../routes/user';
 describe('Test Suite for /api/tag', () => {
 
     const req = request(app);
-
+    let user: User;
     let token: string;
     const tags: Tag[] = [
         {
@@ -15,17 +15,14 @@ describe('Test Suite for /api/tag', () => {
             tag: "tag0"
         }
     ];
-    let user:User = {
-        id: -1, // -1 if not assigned in DB
-        name: "User",
-        email: "email@test.dev",
-        passwd: "test_password"
-    }
 
     beforeAll(async () => {
-        user = await ModelUser.create(user);
+        user = await ModelUser.create({id: -1,
+            username: "admintest",
+            email: "admin@test.test",
+            passwd: "password"});
         // login to get auth token
-        const login = await req.post('/user/login').send({email: user.email, password: user.passwd});
+        const login = await req.post('/api/user/login').send({email: user.email, password: 'password'});
         token = (login.body as loginToken).token;
     });
 

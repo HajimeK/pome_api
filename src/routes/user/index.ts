@@ -52,7 +52,7 @@ user.post('/', verifyAuthToken, async (request, response) => {
 
         return response.status(200).send(u_created);
     } catch(error) {
-        return response.status(400).send(`Could not create a user ${u.name} ${u.email}. Error: ${(error as Error).message}`);
+        return response.status(400).send(`Could not create a user ${u.username} ${u.email}. Error: ${(error as Error).message}`);
     }
 });
 
@@ -63,7 +63,7 @@ user.put('/', verifyAuthToken, async (request, response) => {
 
         return response.status(200).send(u_created);
     } catch(error) {
-        return response.status(400).send(`Could not create a user ${u.name} ${u.email}. Error: ${(error as Error).message}`);
+        return response.status(400).send(`Could not create a user ${u.username} ${u.email}. Error: ${(error as Error).message}`);
     }
 });
 

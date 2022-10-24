@@ -8,13 +8,12 @@
     "check-types": "tsc --noEmit",
     "build": "npm run lint && npm run check-types && npx tsc",
     "jasmine": "jasmine-ts --config=spec/jasmine.json",
-    "test": "npm run build && npm run db-up && npm run jasmine && npm run db-down",
-    "db-up": "db-migrate --env test up",
-    "db-down": "db-migrate --env test down",
+    "test": "npm run db-up && npm run jasmine && npm run db-down",
+    "db-up": "db-migrate --env dev up",
+    "db-down": "db-migrate --env dev down",
     "dev": "db-migrate --env test up && nodemon src/server.ts",
-    "run": "node dist/server.js",
-    "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess 'node ./dist/server.js'",
-    "aws-eb": "chmod +x bin/aws-eb.sh && bin/aws-eb.sh"
+    "start": "node dist/server.js",
+    "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess 'node ./dist/server.js'"
   },
   "author": "Hajime Kawata",
   "license": "ISC",
