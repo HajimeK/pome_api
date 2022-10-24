@@ -1,14 +1,11 @@
 import client from '../database';
 
-
 export type Tag = {
-    id: number, // -1 if not assigned in DB
-    tag: string
+  id: number; // -1 if not assigned in DB
+  tag: string;
 };
 
-
 export class ModelTag {
-
     static async list(): Promise<Tag[]> {
         try {
             // Generate SQL query
@@ -19,7 +16,9 @@ export class ModelTag {
 
             return tags;
         } catch (error) {
-            throw new Error(`Could not get products. Error: ${(error as Error).message}`);
+            throw new Error(
+                `Could not get products. Error: ${(error as Error).message}`
+            );
         }
     }
 
@@ -32,10 +31,11 @@ export class ModelTag {
 
             return Tag;
         } catch (error) {
-            throw new Error(`Could not find Tag ${tag}. Error: ${(error as Error).message}`);
+            throw new Error(
+                `Could not find Tag ${tag}. Error: ${(error as Error).message}`
+            );
         }
     }
-
 
     static async create(tag: string): Promise<Tag> {
         try {
@@ -46,7 +46,9 @@ export class ModelTag {
 
             return result;
         } catch (error) {
-            throw new Error(`Could not add new Tag ${tag}. Error: ${(error as Error).message}`)
+            throw new Error(
+                `Could not add new Tag ${tag}. Error: ${(error as Error).message}`
+            );
         }
     }
 
@@ -63,7 +65,9 @@ export class ModelTag {
 
             return result.rows[0] as Tag;
         } catch (error) {
-            throw new Error(`Could not delete Tag ${tag}. Error: ${(error as Error).message}`);
+            throw new Error(
+                `Could not delete Tag ${tag}. Error: ${(error as Error).message}`
+            );
         }
     }
 }

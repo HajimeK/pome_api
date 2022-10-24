@@ -53,12 +53,12 @@ export class ModelUser {
         try {
             const conn = await client.connect();
             const hash = bcrypt.hashSync(u.passwd + (BCRYPT_PASSWORD as string),
-                                        Number(SALT_ROUNDS));
+                Number(SALT_ROUNDS));
             const sql = `INSERT INTO appuser (username, email, passwd ) \
                         VALUES('${u.username}', '${u.email}', '${hash}') RETURNING *`;
             // request to DB
             const result = (await conn.query(sql)).rows[0] as User;
-            conn.release()
+            conn.release();
 
             return result;
         } catch(error) {
@@ -70,7 +70,7 @@ export class ModelUser {
         try {
             const conn = await client.connect();
             const hash = bcrypt.hashSync(u.passwd + (BCRYPT_PASSWORD as string),
-                                        Number(SALT_ROUNDS));
+                Number(SALT_ROUNDS));
             const sql = `UPDATE appuser \
                             SET username = '${u.username}', \
                                 email   = '${u.email}', \
@@ -79,7 +79,7 @@ export class ModelUser {
                             RETURNING *`;
             // request to DB
             const result = (await conn.query(sql)).rows[0] as User;
-            conn.release()
+            conn.release();
 
             return result;
         } catch(error) {
@@ -97,7 +97,7 @@ export class ModelUser {
 
             return result;
         } catch (error) {
-            throw new Error(`Could not delete user ${id}. Error: ${(error as Error).message}`)
+            throw new Error(`Could not delete user ${id}. Error: ${(error as Error).message}`);
         }
     }
 

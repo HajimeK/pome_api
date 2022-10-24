@@ -8,6 +8,6 @@ describe('Test Suite for /', () => {
     it('Server healthcheck', async () => {
         await req
             .get('/')
-            .expect(200)
+            .expect(200);
     });
 });

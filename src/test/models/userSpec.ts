@@ -1,15 +1,15 @@
 import { ModelUser, User } from '../../models/user';
 
-describe("User Model", () => {
+describe('User Model', () => {
 
     const users: User[] = [
         {
             id: -1, // -1 if not assigned in DB
-            username: "User",
-            email: "email@test.dev",
-            passwd: "test_password"
+            username: 'User',
+            email: 'email@test.dev',
+            passwd: 'test_password'
         }
-    ]
+    ];
     let user: User;
 
     it('create method should add a user', async () => {
@@ -37,7 +37,7 @@ describe("User Model", () => {
     });
 
     it('authenticate with wrong pass to approve login', async () => {
-        const result = await ModelUser.authenticate(users[0].email, "wrong");
+        const result = await ModelUser.authenticate(users[0].email, 'wrong');
         expect(result).toBeNull();
     });
 
@@ -63,7 +63,7 @@ describe("User Model", () => {
 
     it('delete method should remove the user', async () => {
         await ModelUser.delete(user.id);
-        const result = await ModelUser.list()
+        const result = await ModelUser.list();
 
         expect(result).toEqual([]);
     });
