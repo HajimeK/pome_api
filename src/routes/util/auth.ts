@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from "express"
+import { Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 
 // Load configs
 dotenv.config();
@@ -16,10 +16,10 @@ export function verifyAuthToken(request: Request, response: Response, next: Next
             throw Error('Missing Token, it is reuired in your request');
         }
 
-        next()
+        next();
     } catch (error) {
         response
-        .status(401)
-        .send(`${(error as Error).message}`);
+            .status(401)
+            .send(`${(error as Error).message}`);
     }
 }
