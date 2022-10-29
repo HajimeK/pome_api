@@ -9,7 +9,7 @@ import experience from './routes/experience/index';
 
 // Defind application
 const app: express.Application = express();
-const address = 'host:8080';
+const port = process.env.PORT || 3000;
 
 app.use(morgan('common'));
 app.use(helmet());
@@ -39,8 +39,8 @@ app.get('/', function (request: Request, response: Response) {
     response.status(200).send('Receving requests from your IP address:' + request.ip);
 });
 
-app.listen(8080, function () {
-    console.log(`starting app on: ${address}`);
+app.listen(port, function () {
+    console.log(`starting app on port: ${port}`);
 });
 
 export default app;
