@@ -9,9 +9,9 @@ import experience from './routes/experience/index';
 
 // Defind application
 const app: express.Application = express();
-const address = '0.0.0.0:3000';
+const address = 'host:8080';
 
-app.use(morgan("common"));
+app.use(morgan('common'));
 app.use(helmet());
 
 // whitelist
@@ -28,7 +28,7 @@ const limitter = rateLimit({
 });
 app.use(limitter);
 
-app.use(express.json())
+app.use(express.json());
 
 // router
 app.use('/api/experience', experience);
@@ -37,10 +37,10 @@ app.use('/api/tag', tag);
 
 app.get('/', function (request: Request, response: Response) {
     response.status(200).send('Receving requests from your IP address:' + request.ip);
-})
+});
 
-app.listen(3000, function () {
-    console.log(`starting app on: ${address}`)
-})
+app.listen(8080, function () {
+    console.log(`starting app on: ${address}`);
+});
 
 export default app;

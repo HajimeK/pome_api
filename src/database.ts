@@ -1,8 +1,8 @@
-import { Pool } from "pg";
+import { Pool } from 'pg';
 
 let client: Pool;
 
-if (process.env.ENV === "prod") {
+if (process.env.ENV === 'prod') {
   client = new Pool({
     host: process.env.POSTGRES_HOST,
     database: process.env.POSTGRES_DB,
