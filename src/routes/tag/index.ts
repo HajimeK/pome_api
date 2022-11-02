@@ -8,17 +8,19 @@ tag.use(
     express.urlencoded({
         extended: true
     })
-)
+);
 tag.use(express.json());
 
 tag.get('/list', (request: express.Request, response: express.Response) => {
+    response.set({ 'Access-Control-Allow-Origin': '*' });
+
     ModelTag.list()
-    .then(tags => {
-        return response.status(200).send(tags);
-    })
-    .catch(error => {
-        return response.status(400).send(`Could not get tags. Error: ${(error as Error).message}`);
-    })
+        .then(tags => {
+            return response.status(200).send(tags);
+        })
+        .catch(error => {
+            return response.status(400).send(`Could not get tags. Error: ${(error as Error).message}`);
+        });
 });
 
 tag.get('/:tag', (request: express.Request, response: express.Response) => {

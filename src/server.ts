@@ -15,11 +15,12 @@ app.use(morgan('common'));
 app.use(helmet());
 
 // whitelist
-const allowedOrigins = ['http://localhost:3000', 'http://ui:80'];
-const corsOptions: cors.CorsOptions = {
-    origin: allowedOrigins
-};
-app.use(cors(corsOptions));
+//const allowedOrigins = ['http://localhost:3000', 'http://localhost:4200/', 'http://pomefront.s3-website-ap-northeast-1.amazonaws.com/'];
+//const corsOptions: cors.CorsOptions = {
+//    origin: allowedOrigins
+//};
+//app.use(cors(corsOptions));
+app.use(cors());
 
 // limitter
 const limitter = rateLimit({
