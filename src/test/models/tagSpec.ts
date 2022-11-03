@@ -20,6 +20,7 @@ describe('Tag Model', () => {
 
     it('create method should add a tag', async () => {
         tag = await ModelTag.create(tags[0].tag);
+        tags[0].id =tag.id;
         // tag id is assigned y DB
         expect(tag.id).toBeGreaterThan(-1);
         // Can achivale in DB

@@ -118,9 +118,9 @@ export class ModelExperience {
     static async delete(id: number): Promise<Experience> {
         try {
             const conn = await client.connect();
-            const sqlreleexp = `DELETE FROM relexptag WHERE experience=${id}`;
+            const sqlreleexp = `DELETE FROM relexptag WHERE experience=${id};`;
             await conn.query(sqlreleexp);
-            const sqlexp = `DELETE FROM experience WHERE id=${id}`;
+            const sqlexp = `DELETE FROM experience WHERE id=${id};`;
             const result = await conn.query(sqlexp);
             conn.release();
 

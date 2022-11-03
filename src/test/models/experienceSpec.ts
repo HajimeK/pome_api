@@ -50,12 +50,8 @@ describe('Experience Model', () => {
     });
 
     afterAll( async () => {
-        for( const item of experiences) {
-            await ModelExperience.delete(item.id);
-        }
-
         await ModelTag.delete('tag1');
-        await ModelTag.delete;('tag2');
+        await ModelTag.delete('tag2');
 
         await ModelUser.delete(user.id);
     });
@@ -65,24 +61,28 @@ describe('Experience Model', () => {
             experiences[0],
             ['tag1']
         );
+        experiences[0].id = experience1.id;
         expect(experience1.id).toBeGreaterThan(-1);
     });
 
     it('list method should return a list of experience', async () => {
-        const beforeLength = (await ModelExperience.list()).length;
+        const beforeResult = await ModelExperience.list();
         experience2 = await ModelExperience.create(
             experiences[1],
             ['tag1']
         );
+        experiences[1].id = experience2.id;
         experience3 = await ModelExperience.create(
             experiences[2],
             ['tag2']
         );
+        experiences[2].id = experience3.id;
         experience4 = await ModelExperience.create(
             experiences[3]
         );
+        experiences[3].id = experience4.id;
         const result = await ModelExperience.list();
-        expect(result.length).toEqual(beforeLength + 3);
+        expect(result.length - beforeResult.length).toEqual(3);
     });
 
     it('list method with a tag name should return a list of experiences with the tag', async () => {
@@ -104,9 +104,11 @@ describe('Experience Model', () => {
     });
 
     it('delete method should remove the experience', async () => {
-        await ModelExperience.delete(experience1.id);
-        const result = await ModelExperience.get(experience1.id);
-        expect(result).toBeUndefined();
+        for( const item of experiences) {
+            await ModelExperience.delete(item.id);
+            const result = await ModelExperience.get(experience1.id);
+            expect(result).toBeUndefined();
+        }
     });
 
 });

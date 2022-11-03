@@ -57,15 +57,13 @@ describe('Test suite for /api/experience', () => {
     });
 
     afterAll( async () => {
-        const listExperience = await ModelExperience.list();
-        for( const item of listExperience) {
-            await ModelExperience.delete(item.id);
-        }
+        await ModelExperience.delete(experiences[1].id);
+        await ModelExperience.delete(experiences[2].id);
+        await ModelExperience.delete(experiences[3].id);
 
-        const listTag = await ModelTag.list();
-        for( const item of listTag) {
-            await ModelTag.delete(item.tag);
-        }
+        await ModelTag.delete(tags[0].tag);
+        await ModelTag.delete(tags[1].tag);
+
         await ModelUser.delete(user.id);
     });
 

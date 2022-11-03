@@ -9,7 +9,7 @@ export class ModelTag {
     static async list(): Promise<Tag[]> {
         try {
             // Generate SQL query
-            const sql = 'SELECT * FROM tag';
+            const sql = 'SELECT * FROM tag;';
             const conn = await client.connect();
             const tags = (await conn.query(sql)).rows as Tag[];
             conn.release();
@@ -54,9 +54,9 @@ export class ModelTag {
 
     static async delete(tag: string): Promise<Tag> {
         try {
-            const sql = `DELETE FROM tag WHERE tag='${tag}' RETURNING *`;
+            const sql = `DELETE FROM tag WHERE tag='${tag}' RETURNING *;`;
             const tagid = (await ModelTag.get(tag)).id;
-            const sqlrelexptag = `DELETE FROM relexptag WHERE tag=${tagid}`;
+            const sqlrelexptag = `DELETE FROM relexptag WHERE tag=${tagid};`;
 
             const conn = await client.connect();
             await conn.query(sqlrelexptag);

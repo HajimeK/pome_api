@@ -21,7 +21,7 @@ export class ModelUser {
     static async list(): Promise<User[]> {
         try {
             // Generate SQL query
-            const sql = 'SELECT id, username, email FROM appuser';
+            const sql = 'SELECT id, username, email FROM appuser;';
             // request to DB
             const conn = await client.connect();
             const result = (await conn.query(sql)).rows as User[];
@@ -37,7 +37,7 @@ export class ModelUser {
         try {
             const sql = `SELECT id, username, email \
                             FROM appuser \
-                            WHERE id=${id}`;
+                            WHERE id=${id};`;
             // request to DB
             const conn = await client.connect();
             const result = (await conn.query(sql)).rows[0] as User;
@@ -55,7 +55,7 @@ export class ModelUser {
             const hash = bcrypt.hashSync(u.passwd + (BCRYPT_PASSWORD as string),
                 Number(SALT_ROUNDS));
             const sql = `INSERT INTO appuser (username, email, passwd ) \
-                        VALUES('${u.username}', '${u.email}', '${hash}') RETURNING *`;
+                        VALUES('${u.username}', '${u.email}', '${hash}') RETURNING *;`;
             // request to DB
             const result = (await conn.query(sql)).rows[0] as User;
             conn.release();
@@ -76,7 +76,7 @@ export class ModelUser {
                                 email   = '${u.email}', \
                                 passwd = '${hash}' \
                             WHERE  appuser.id = ${u.id} \
-                            RETURNING *`;
+                            RETURNING *;`;
             // request to DB
             const result = (await conn.query(sql)).rows[0] as User;
             conn.release();
@@ -89,7 +89,7 @@ export class ModelUser {
 
     static async delete(id: number): Promise<User> {
         try {
-            const sql = `DELETE FROM appuser WHERE id=${id} RETURNING *`;
+            const sql = `DELETE FROM appuser WHERE id=${id} RETURNING *;`;
             // request to DB
             const conn = await client.connect();
             const result = (await conn.query(sql)).rows[0] as User;
@@ -103,7 +103,7 @@ export class ModelUser {
 
     static async authenticate(email: string, password: string): Promise<User | null> {
 
-        const sql = `SELECT * FROM appuser WHERE email='${email}'`;
+        const sql = `SELECT * FROM appuser WHERE email='${email}';`;
 
         const conn = await client.connect();
         const result = await conn.query(sql);
