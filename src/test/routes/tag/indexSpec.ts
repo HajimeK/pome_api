@@ -12,15 +12,15 @@ describe('Test Suite for /api/tag', () => {
     const tags: Tag[] = [
         {
             id: -1, // -1 if not assigned in DB
-            tag: "tag0"
+            tag: 'tag0'
         }
     ];
 
     beforeAll(async () => {
         user = await ModelUser.create({id: -1,
-            username: "admintest",
-            email: "admin@test.test",
-            passwd: "password"});
+            username: 'admintest',
+            email: 'admin@test.test',
+            passwd: 'password'});
         // login to get auth token
         const login = await req.post('/api/user/login').send({email: user.email, password: 'password'});
         token = (login.body as loginToken).token;
@@ -58,8 +58,8 @@ describe('Test Suite for /api/tag', () => {
             .get('/api/tag/list')
             .expect(200)
             .expect((response) => {
-                const products = response.body as Tag[];
-                expect(products.length).toBe(1);
+                const tags = response.body as Tag[];
+                expect(tags.length).toBe(1);
             });
     });
 
@@ -70,7 +70,7 @@ describe('Test Suite for /api/tag', () => {
             .expect(200)
             .expect ( (response) => {
                 expect(response.body)
-                .toEqual(tags[0]);
+                    .toEqual(tags[0]);
             });
     });
 
