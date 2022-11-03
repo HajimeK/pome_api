@@ -3,7 +3,7 @@ import { ModelTag, Tag } from '../../models/tag';
 import { ModelUser, User } from '../../models/user';
 
 
-describe("Experience Model", () => {
+describe('Experience Model', () => {
 
     let experience1 : Experience;
     let experience2 : Experience;
@@ -15,74 +15,74 @@ describe("Experience Model", () => {
     const experiences: Experience[] = [
         {
             id: -1, // -1 if not assigned in DB
-            title: "Experience1",
-            note: "This is my experience about test so that we can do something",
-            urle: "https://superbc.dev"
+            title: 'Experience1',
+            note: 'This is my experience about test so that we can do something',
+            urle: 'https://superbc.dev'
         },
         {
             id: -1, // -1 if not assigned in DB
-            title: "Experience2",
-            note: "This is my experience about test so that we can do something",
-            urle: "https://superbc.dev"
+            title: 'Experience2',
+            note: 'This is my experience about test so that we can do something',
+            urle: 'https://superbc.dev'
         },
         {
             id: -1, // -1 if not assigned in DB
-            title: "Experience3",
-            note: "This is my experience about test so that we can do something",
-            urle: "https://superbc.dev"
+            title: 'Experience3',
+            note: 'This is my experience about test so that we can do something',
+            urle: 'https://superbc.dev'
         },
         {
             id: -1, // -1 if not assigned in DB
-            title: "Experience4",
-            note: "This is my experience about test so that we can do something",
-            urle: "https://superbc.dev"
+            title: 'Experience4',
+            note: 'This is my experience about test so that we can do something',
+            urle: 'https://superbc.dev'
         }
     ];
 
     beforeAll(async () => {
         user = await ModelUser.create({id: -1,
-            username: "admintest",
-            email: "admin@test.test",
-            passwd: "password"});
-        tag1 = await ModelTag.create("tag1");
-        tag2 = await ModelTag.create("tag2");
+            username: 'admintest',
+            email: 'admin@test.test',
+            passwd: 'password'});
+        tag1 = await ModelTag.create('tag1');
+        tag2 = await ModelTag.create('tag2');
+
     });
 
     afterAll( async () => {
-        const listExperience = await ModelExperience.list();
-        for( const item of listExperience) {
+        for( const item of experiences) {
             await ModelExperience.delete(item.id);
         }
 
-        const listTag = await ModelTag.list();
-        for( const item of listTag) {
-            await ModelTag.delete(item.tag);
-        }
+        await ModelTag.delete('tag1');
+        await ModelTag.delete;('tag2');
+
         await ModelUser.delete(user.id);
     });
 
     it('create method should add an experience, and assign id larger than or equal to 0', async () => {
         experience1 = await ModelExperience.create(
             experiences[0],
-            ["tag1"]
+            ['tag1']
         );
         expect(experience1.id).toBeGreaterThan(-1);
     });
 
     it('list method should return a list of experience', async () => {
+        const beforeLength = (await ModelExperience.list()).length;
         experience2 = await ModelExperience.create(
             experiences[1],
-            ["tag1"]
+            ['tag1']
         );
         experience3 = await ModelExperience.create(
             experiences[2],
-            ["tag2"]
+            ['tag2']
         );
         experience4 = await ModelExperience.create(
             experiences[3]
         );
         const result = await ModelExperience.list();
-        expect(result.length).toEqual(4);
+        expect(result.length).toEqual(beforeLength + 3);
     });
 
     it('list method with a tag name should return a list of experiences with the tag', async () => {
@@ -98,14 +98,14 @@ describe("Experience Model", () => {
     });
 
     it('update method should update an experience status', async () => {
-        const updatedTitle = "Experience1update";
+        const updatedTitle = 'Experience1update';
         experience1.title = updatedTitle;
         expect((await ModelExperience.update(experience1)).title).toEqual(updatedTitle);
     });
 
     it('delete method should remove the experience', async () => {
         await ModelExperience.delete(experience1.id);
-        const result = await ModelExperience.get(experience1.id)
+        const result = await ModelExperience.get(experience1.id);
         expect(result).toBeUndefined();
     });
 

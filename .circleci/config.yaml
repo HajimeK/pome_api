@@ -18,11 +18,16 @@ jobs:
           name: API Install
           command: |
             npm install
-# Building the backend
+# Building the api
       - run:
-          name: Back-End Build
+          name: API Build
           command: |
             npm run build
+# Test the api
+      - run:
+          name: API Test
+          command: |
+            npm run jasmine
 # Installing AWS Elastic Beanstalk CLI
       - run:
           name: Installing AWS Elasticbeanstalk

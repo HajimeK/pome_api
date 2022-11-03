@@ -1,21 +1,21 @@
 import { ModelTag, Tag } from '../../models/tag';
 
-describe("Tag Model", () => {
+describe('Tag Model', () => {
 
     let tag: Tag;
     const tags: Tag[] = [
         {
             id: -1, // -1 if not assigned in DB
-            tag: "tag0"
+            tag: 'tag0'
         }
     ];
 
     beforeAll(() => {
-        console.log("Before all in Tag Unit tests")
+        console.log('Before all in Tag Unit tests');
     });
 
     afterAll(() => {
-        console.log("After all in Tag Unit tests")
+        console.log('After all in Tag Unit tests');
     });
 
     it('create method should add a tag', async () => {
