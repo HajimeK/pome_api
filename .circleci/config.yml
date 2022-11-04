@@ -39,9 +39,10 @@ jobs:
           command: npm run jasmine
       - eb/setup
       - run:
+          name: EBS deploy
           command: |
+            eb deploy pome_api
             eb status
-          name: EB Steps to deploy
 
 workflows:
   # Below is the definition of your workflow.
