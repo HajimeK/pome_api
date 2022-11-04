@@ -28,12 +28,11 @@ jobs:
           # If you are using yarn, change the line below from "npm" to "yarn"
           pkg-manager: npm
           environment:
-            POSTGRES_HOST: $POSTGRES_HOST
-            POSTGRES_DB: $POSTGRES_DB
-            POSTGRES_USER: $POSTGRES_USER
-            POSTGRES_PASSWORD: $POSTGRES_PASSWORD
-            ENV: $ENV
-            TOKEN_SECRET: $TOKEN_SECRET
+            POSTGRES_HOST: ${POSTGRES_HOST}
+            POSTGRES_DB: ${POSTGRES_DB}
+            POSTGRES_USER: ${POSTGRES_USER}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+            ENV: ${ENV}
       - run:
           name: Run Install
           command: npm install
