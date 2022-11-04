@@ -41,7 +41,7 @@ jobs:
       - run:
           name: EBS deploy
           command: |
-            eb deploy pome_api
+            eb deploy Pomeapi-env
             eb status
 
 workflows:
