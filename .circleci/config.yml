@@ -41,6 +41,7 @@ jobs:
       - run:
           name: EBS deploy
           command: |
+            eb init
             eb deploy pome_api
             eb status
 
