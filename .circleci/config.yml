@@ -7,7 +7,8 @@ orbs:
   # Orbs reduce the amount of configuration required for common tasks.
   # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/node
   node: circleci/node@4.7
-  eb: circleci/aws-elastic-beanstalk@2.0.1
+  # eb: circleci/aws-elastic-beanstalk@2.0.1
+  eb: circleci/aws-elastic-beanstalk@1.0.0
 
 jobs:
   # Below is the definition of your job to build and test your app, you can rename and customize it as you want.
@@ -36,6 +37,11 @@ jobs:
       - run:
           name: Run tests
           command: npm run jasmine
+      - eb/setup
+      - run:
+          command: |
+            eb status
+          name: EB Steps to deploy
 
 workflows:
   # Below is the definition of your workflow.
