@@ -9,6 +9,7 @@ describe('Tag Model', () => {
             tag: 'tag0'
         }
     ];
+    let lenBefore :number;
 
     beforeAll(() => {
         console.log('Before all in Tag Unit tests');
@@ -19,6 +20,7 @@ describe('Tag Model', () => {
     });
 
     it('create method should add a tag', async () => {
+        lenBefore = (await ModelTag.list()).length;
         tag = await ModelTag.create(tags[0].tag);
         tags[0].id =tag.id;
         // tag id is assigned y DB
@@ -29,7 +31,7 @@ describe('Tag Model', () => {
 
     it('list method should return a list of tags', async () => {
         const result = await ModelTag.list();
-        expect(result.length).toEqual(1);
+        expect(result.length).toEqual(beforeLen + 1);
     });
 
     it('get method should return the correct tag', async () => {
