@@ -59,7 +59,7 @@ describe('Test Suite for /api/tag', () => {
             .expect(200)
             .expect((response) => {
                 const tags = response.body as Tag[];
-                expect(tags.length).toBe(1);
+                expect(tags.length).toBeGreaterThan(1);
             });
     });
 
