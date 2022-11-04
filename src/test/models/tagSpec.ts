@@ -31,7 +31,7 @@ describe('Tag Model', () => {
 
     it('list method should return a list of tags', async () => {
         const result = await ModelTag.list();
-        expect(result.length).toEqual(beforeLen + 1);
+        expect(result.length).toEqual(lenBefore + 1);
     });
 
     it('get method should return the correct tag', async () => {
