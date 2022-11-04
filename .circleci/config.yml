@@ -41,7 +41,7 @@ jobs:
       - run:
           name: EBS deploy
           command:
-            eb deploy
+            eb deploy Pomeapi-env
 
 workflows:
   # Below is the definition of your workflow.
