@@ -31,9 +31,7 @@
           - [GET /api/user/:id](#get-apiuserid)
           - [POST /api/user [token required]](#post-apiuser-token-required)
           - [DELETE /api/user/:id [token required]](#delete-apiuserid-token-required)
-      - [Deploy](#deploy)
-        - [To AWS](#to-aws)
-        - [To Azure](#to-azure)
+- [To run the app](#to-run-the-app)
 
 
 ## Middleware with express.js and Backend DB
@@ -358,24 +356,23 @@ Set the following in the request body.
 | 401 | Unauthorized | token not accepted |
 | 404 | Not Found | When there is no entry with the user id |
 
+# To run the app
+
+Define the environment variables prperly to point to the middleware API, which runs with https://github.com/HajimeK/pome_api
+
+- POSTGRES_HOST (Host URL)
+- POSTGRES_DB (Your db name on postgres)
+- POSTGRES_USER (your db server admin user id)
+- POSTGRES_PASSWORD (Your db server password)
+- ENV (prod by definition)
+- TOKEN_SECRET (arbitrary string to authenticate for DB update)
+
+These environment variable need to be set both in your circleci pipeline and AWS Beanstalk environment.
 
 
-
-#### Deploy
-
-Target environment.
-Here I am going to try deploying to both AWS and Azure.
-
-![](deploy.png)
-
-##### To AWS
-
-https://docs.aws.amazon.com/ja_jp/elasticbeanstalk/latest/dg/using-features.managing.db.html
-
-
-
-##### To Azure
-
-https://docs.microsoft.com/ja-jp/azure/developer/python/how-to-create-static-sites
-
-https://docs.microsoft.com/ja-jp/azure/postgresql/flexible-server/tutorial-webapp-server-vnet
+```
+npm install
+npm run build
+npm run jasmine
+npm run start
+```
